@@ -1,17 +1,47 @@
-# Simple Kafka Container with embedded ZooKeeper
+# Kafka Container 
 
-At the moment GitLab CI does not easily support interconnecting services (see
-[#15220](https://gitlab.com/gitlab-org/gitlab-ce/issues/15220)). This container
-runs ZooKeeper as daemon and Kafka as foreground process, so it can be used
-out-of-the-box for CI testing.
+A simple docker kafka container with with an embedded zookeper. Useful for running as part of gitlab CI.  
 
-It follows [Apache Kafka Quickstart](https://kafka.apache.org/quickstart),
-usings the CLI tools shipped with the binary release to start a ZooKeeper daemon
-and the Kafka server.
+This repository is a modification from `MartinNowak`'s [repository](https://github.com/MartinNowak/docker-kafka)
+
+# Instructions
+
+## Build image 
+
+For kafka:2.1.1 example:
+
+```bash
+$ docker build --build-arg KAFKA_VERSION=2.1.1 -t <you username>/kafka:2.1.1 .
+```
+
+## Run image 
+
+```bash
+$ docker run -p 2181:2181/tcp -p 9092:9092/tcp <you username>/kafka
+```
+
+## docker-compose.yml example
+
+A working docker-compose example
+
+```yaml
+kafka:
+    image: ros65536/kafka:2.1.1
+    ports:
+      - "9092:9092"
+      - "2181:2181"
+    volumes:
+      - ./tmp/kafka:/var/lib/kafka
+    environment:
+      ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      BROKER_ID: 1
+```
+
+# Options
 
 ## Env Options
 
-Optionally use specific broker id, `docker run --rm -it --env=BROKER_ID=1 martinnowak/kafka`.
+Optionally use specific broker id, `docker run --rm -it --env=BROKER_ID=1 ros65536/kafka`.
 ```
 # generate unique id by default
 ENV BROKER_ID=-1
@@ -19,14 +49,14 @@ ENV BROKER_ID=-1
 
 ## Volume
 
-Optionally mount persistent volume, `docker run --rm -it --volume=/tmp/host/kafka:/var/lib/kafka martinnowak/kafka`.
+Optionally mount persistent volume, `docker run --rm -it --volume=/tmp/host/kafka:/var/lib/kafka ros65536/kafka`.
 ```
 VOLUME /var/lib/kafka
 ```
 
 ## Ports
 
-Optionally publish ports on host, `docker run --rm -it --publish=2181:2181 --publish=9092:9092 martinnowak/kafka`.
+Optionally publish ports on host, `docker run --rm -it --publish=2181:2181 --publish=9092:9092 ros65536/kafka`.
 ```
 EXPOSE 2181/tcp 9092/tcp
 ```
