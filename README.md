@@ -40,7 +40,7 @@ kafka:
     volumes:
       - ./tmp/kafka:/var/lib/kafka
     environment:
-      ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       BROKER_ID: 1
 ```
 

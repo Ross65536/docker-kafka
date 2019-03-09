@@ -6,9 +6,8 @@ ARG KAFKA_VERSION=1.0.0
 ARG SCALA_VERSION=2.11
 
 # generate unique id by default
-ENV BROKER_ID=1
-ENV ADVERTISED_HOSTNAME="localhost"
-ENV KAFKA_ADVERTISED_PORT="9092"
+ENV BROKER_ID=-1
+ENV ADVERTISED_LISTENERS="PLAINTEXT://localhost:9092"
 
 EXPOSE 2181/tcp 9092/tcp
 
@@ -33,4 +32,4 @@ VOLUME /var/lib/kafka
 
 CMD sed -i "s|^broker.id=.*$|broker.id=$BROKER_ID|" /opt/kafka/config/server.properties && \
     /opt/kafka/bin/zookeeper-server-start.sh -daemon /opt/kafka/config/zookeeper.properties && \
-    /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties --override advertised.host.name=$ADVERTISED_HOSTNAME --override advertised.port=$KAFKA_ADVERTISED_PORT
+    /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties --override advertised.listeners=$ADVERTISED_LISTENERS
