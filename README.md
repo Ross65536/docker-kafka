@@ -4,6 +4,13 @@ A simple docker kafka container with with an embedded zookeper. Useful for runni
 
 This repository is a modification from `MartinNowak`'s [repository](https://github.com/MartinNowak/docker-kafka)
 
+## Docker-Hub
+
+[Docker-Hub](https://cloud.docker.com/repository/docker/ros65536/kafka/general)
+
+[![](https://images.microbadger.com/badges/image/ros65536/kafka.svg)](https://microbadger.com/images/ros65536/kafka "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/ros65536/kafka.svg)](https://microbadger.com/images/ros65536/kafka "Get your own version badge on microbadger.com")
+
 # Instructions
 
 ## Build image 
